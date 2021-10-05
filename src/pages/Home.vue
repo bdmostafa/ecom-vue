@@ -3,7 +3,7 @@
 
   <product-carousel></product-carousel>
 
-  <featured-products></featured-products>
+  <featured-products :products="products"></featured-products>
 
   <banner></banner>
 
@@ -20,6 +20,8 @@ import Banner from "../components/ui/Banner.vue";
 import ProductListCarousel from "../components/ui/ProductsListCarousel.vue";
 import BlogSection from "../components/ui/BlogSection.vue";
 
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Home",
   components: {
@@ -30,5 +32,19 @@ export default {
     ProductListCarousel,
     BlogSection,
   },
+  methods: {
+      ...mapActions('products', ['fetchProducts']),
+    //   loadProducts() {
+        //   this.products = this.$store.getters['products/products']
+        //   console.log(this.products)
+    //   },
+
+  },
+  computed: {
+      ...mapGetters('products', ['products']),
+  },
+  created() {
+      this.fetchProducts();
+  }
 };
 </script>
