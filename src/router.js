@@ -7,6 +7,7 @@ import Checkout from './pages/Checkout.vue'
 import Blog from './pages/Blog.vue'
 import Contact from './pages/Contact.vue'
 import Login from './pages/Login.vue'
+import Category from './pages/Category.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,7 +19,8 @@ const router = createRouter({
     { path: '/checkout', component: Checkout },
     { path: '/blog', component: Blog },
     { path: '/contact', component: Contact },
-    { path: '/login', component: Login }
+    { path: '/login', component: Login },
+    { path: '/category/:category', component: Category}
   ]
 });
 

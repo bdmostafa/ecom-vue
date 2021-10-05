@@ -9,14 +9,11 @@
               <span>All departments</span>
             </div>
             <ul>
-              <li><a href="#">Baby Clothing</a></li>
-              <li><a href="#">Electronics</a></li>
-              <li><a href="#">Women Fashion</a></li>
-              <li><a href="#">Laptop & Computers</a></li>
-              <li><a href="#">Baby Clothing</a></li>
-              <li><a href="#">Electronics</a></li>
-              <li><a href="#">Women Fashion</a></li>
-              <li><a href="#">Laptop & Computers</a></li>
+              <li v-for="category in categories" :key="category">
+                <router-link :to="`/category/${category}`">
+                  {{ category }}
+                </router-link>
+              </li>
             </ul>
           </div>
         </div>
@@ -25,7 +22,7 @@
             <div class="hero__search__form">
               <form action="#">
                 <div class="hero__search__categories">
-                  All Categories
+                  Search Products
                   <span class="arrow_carrot-down"></span>
                 </div>
                 <input type="text" placeholder="What do yo u need?" />
@@ -37,7 +34,7 @@
                 <i class="fa fa-phone"></i>
               </div>
               <div class="hero__search__phone__text">
-                <h5>1234567890</h5>
+                <h5>111-222-333</h5>
                 <span>support 24/7 time</span>
               </div>
             </div>
@@ -47,10 +44,10 @@
             data-setbg="assets/img/hero/banner.jpg"
           >
             <div class="hero__text">
-              <span>FRUIT FRESH</span>
+              <span>Unique Design</span>
               <h2>Vegetable <br />100% Organic</h2>
               <p>Free Pickup and Delivery Available</p>
-              <a href="#" class="primary-btn">SHOP NOW</a>
+              <router-link to="/shop" class="primary-btn">SHOP NOW</router-link>
             </div>
           </div>
         </div>
@@ -60,7 +57,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "HeroCallToAction",
+  computed: mapGetters("products", ["categories"]),
 };
 </script>
