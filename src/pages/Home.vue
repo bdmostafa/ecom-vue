@@ -3,7 +3,7 @@
 
   <product-carousel></product-carousel>
 
-  <featured-products :products="products"></featured-products>
+  <featured-products></featured-products>
 
   <banner></banner>
 
