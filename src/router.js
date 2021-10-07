@@ -8,6 +8,7 @@ import Blog from './pages/Blog.vue'
 import Contact from './pages/Contact.vue'
 import Login from './pages/Login.vue'
 import Category from './pages/Category.vue'
+import ProductDetails from './components/products/ProductDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,7 +21,8 @@ const router = createRouter({
     { path: '/blog', component: Blog },
     { path: '/contact', component: Contact },
     { path: '/login', component: Login },
-    { path: '/category/:category', component: Category}
+    { path: '/category/:category', component: Category},
+    { path: '/products/:productId', component: ProductDetails },
   ]
 });
 

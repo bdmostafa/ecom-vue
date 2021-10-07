@@ -7,6 +7,7 @@ export default {
       products: [],
       categories: [],
       filteredProducts: null,
+      product: {}
     };
   },
   mutations: {
@@ -14,6 +15,7 @@ export default {
     ALL_CATEGORIES: (state, payload) => (state.categories = payload),
     GET_FILTERED_PRODUCTS: (state, payload) =>
       (state.filteredProducts = payload),
+    FETCH_PRODUCT: (state, payload) => (state.product = payload)
   },
   actions: {
     async fetchProducts({ commit }) {
@@ -21,6 +23,13 @@ export default {
 
       commit("FETCH_PRODUCTS", response.data);
       // console.log("====", response.data)
+    },
+    async fetchProduct({ commit, dispatch }, productId) {
+      const response = await axios.get(`https://ecombs.herokuapp.com/products/${productId}`);
+
+      dispatch('products/getFilteredProducts', response.data.product.category, {root: true})
+      commit("FETCH_PRODUCT", response.data.product);
+      
     },
     async getCategories({ commit }) {
       const response = await axios.get("https://ecombs.herokuapp.com/products");
@@ -58,5 +67,8 @@ export default {
     filteredProducts(state) {
       return state.filteredProducts;
     },
+    product(state) {
+      return state.product
+    }
   },
 };

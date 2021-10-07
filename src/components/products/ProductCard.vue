@@ -1,31 +1,16 @@
 <template>
-  <section class="featured spad">
+     <section class="featured spad">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="section-title">
-            <h2>Featured Product</h2>
-          </div>
-          <div class="featured__controls">
-            <ul>
-              <li :class="{ active: isAll }" @click="processAll">
-                All
-              </li>
-              <li
-                :class="{ active: categoryName === category }"
-                v-for="category in categories"
-                :key="category"
-                @click="processFilter(category)"
-              >
-                {{ category }}
-              </li>
-            </ul>
+            <h2> {{ category }} Product</h2>
           </div>
         </div>
       </div>
       <div class="row featured__filter">
         <div
-          v-for="product in isAll ? products : filteredProducts"
+          v-for="product in filteredProducts"
           :key="product._id"
           class="col-lg-3 col-md-4 col-sm-6"
         >
@@ -100,35 +85,18 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "FeaturedProducts",
-  data() {
-    return {
-      isAll: true,
-      isFilter: false,
-      categoryName: "",
-    };
+    name: 'ProductCard',
+    props: ["category"],
+    methods: {
+    ...mapActions("products", ["getFilteredProducts"]),
   },
-  methods: {
-    ...mapActions("products", ["getCategories", "getFilteredProducts"]),
-    processAll() {
-      this.isAll = true;
-      this.isFiltered = false;
-      this.categoryName = "";
-    },
-    processFilter(category) {
-      this.categoryName = category;
-      this.getFilteredProducts(category);
-      this.isAll = false;
-      this.isFiltered = true;
-    },
-  },
-  computed: {
-    ...mapGetters("products", ["products", "categories", "filteredProducts"]),
-  },
-  created() {
-    this.getCategories();
-  },
-};
+  computed: mapGetters("products", ["filteredProducts"]),
+  
+    created() {
+        this.getFilteredProducts(this.category)
+        // console.log("cat===", this.$route.params.category)
+    }
+}
 </script>
 
 <style scoped>
