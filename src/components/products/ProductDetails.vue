@@ -33,11 +33,23 @@
         <div class="section" style="padding-bottom:20px;">
           <h6 class="title-attr"><small>Quantity</small></h6>
           <div>
-            <div class="btn-minus">
+            <div
+              @click="updateQty(product._id, false, product.quantity)"
+              class="btn-minus"
+            >
               <span class="fa fa-minus"></span>
             </div>
-            <input value="1" />
-            <div class="btn-plus">
+            <input
+              type="number"
+              v-model="cartInputValue"
+              min="1"
+              :max="product.quantity >= 1 ? product.quantity : 0"
+              ref="qtyInput"
+            />
+            <div
+              @click="updateQty(product._id, true, product.quantity)"
+              class="btn-plus"
+            >
               <span class="fa fa-plus"></span>
             </div>
           </div>
@@ -45,16 +57,17 @@
 
         <div class="section" style="padding-bottom:20px;">
           <button
-            :disabled="product.quantity === 0"
-            :class="{ disabled: product.quantity === 0 }"
+            :disabled="product.quantity === 0 || isAdded"
+            :class="{ disabled: product.quantity === 0 || isAdded }"
             class="btn btn-success"
+            @click="processToAdd(product._id)"
           >
             <span
               style="margin-right:20px; font-weight: 700"
               class="fa fa-shopping-cart"
               aria-hidden="true"
             >
-              Add To Cart
+              {{ isAdded ? " Added" : " Add To Cart" }}
             </span>
           </button>
 
@@ -101,37 +114,72 @@
     <product-card :category="product.category">
       <slot></slot>
     </product-card>
-
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-// import ProductCard from "./ProductCard.vue";
 
 export default {
   name: "ProductDetails",
-  components: {
-    // ProductCard,
-  },
+  components: {},
   data() {
-    return {};
+    return {
+      isAdded: false,
+      productId: this.$route.params.productId,
+      cartInputValue: 1,
+    };
   },
   methods: {
+    // ...mapActions({
+    //   fetchProduct: ["products/fetchProduct"],
+    //   addToCart: ["cart/addToCart"],
+    // }),
     ...mapActions("products", ["fetchProduct"]),
+    ...mapActions("cart", ["addToCart", "updateCart"]),
+    processToAdd(id) {
+      this.addToCart(id);
+      this.isAdded = true;
+    },
+    updateQty(id, isIncrease, productQty) {
+      // let inputValue = this.$refs.qtyInput.value;
+      if (isIncrease) {
+        productQty > this.$refs.qtyInput.value
+          ? this.$refs.qtyInput.value++
+          : this.$refs.qtyInput.value;
+      } else {
+        this.$refs.qtyInput.value > 1
+          ? this.$refs.qtyInput.value--
+          : this.$refs.qtyInput.value;
+      }
+
+      this.updateCart({ id, isIncrease });
+    },
+    getQtyInputValue(id) {
+      this.cartItems.forEach((cartItem) => {
+        if (cartItem._id === id) {
+          this.cartInputValue = cartItem.qtyOrdered;
+        }
+      });
+    },
   },
-  computed: mapGetters("products", ["product"]),
+  computed: {
+    ...mapGetters("products", ["product"]),
+    ...mapGetters("cart", ["cartItems"]),
+  },
   created() {
-    this.fetchProduct(this.$route.params.productId);
+    this.fetchProduct(this.productId);
+    this.getQtyInputValue(this.productId);
+    // this.isProductAdded(this.productId);
   },
-  watch: {
-    // qty() {
-    //   if (this.product.quantity === 0) {
-    //     return true
-    //   }
-    //   return false
-    // }
-  },
+  // mounted: {
+  //   isStock() {
+  //     if (this.product.quantity === 0) {
+  //       return true
+  //     }
+  //     return false
+  //   }
+  // },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="humberger__menu__overlay"></div>
+  <div class="humberger__menu__overlay"></div>
   <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
       <a href="#" class="logo">Ecom-Vue</a>
@@ -10,10 +10,14 @@
           <a href="#"><i class="fa fa-heart"></i> <span>1</span></a>
         </li>
         <li>
-          <a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a>
+          <a href="#"
+            ><i class="fa fa-shopping-bag"></i> <span> {{ cartItems.length }} </span></a
+          >
         </li>
       </ul>
-      <div class="header__cart__price">item: <span>$150.00</span></div>
+      <div class="header__cart__price">
+        item: <span>${{ totalPrice.toFixed(2) }}</span>
+      </div>
     </div>
     <div class="humberger__menu__widget">
       <div class="header__top__right__language">
@@ -32,20 +36,20 @@
     <nav class="humberger__menu__nav mobile-menu">
       <ul>
         <li class="active"><router-link to="/">Home</router-link></li>
-              <li><router-link to="/shop">Shop</router-link></li>
+        <li><router-link to="/shop">Shop</router-link></li>
         <li>
           <a href="#">Pages</a>
           <ul class="header__menu__dropdown">
             <li><router-link to="#">About Us</router-link></li>
-                  <li><router-link to="/cart">Shoping Cart</router-link></li>
-                  <li><router-link to="/checkout">Check Out</router-link></li>
-                  <li><router-link to="#">Privacy Policy</router-link></li>
-                  <li><router-link to="#">Terms & Conditions</router-link></li>
-                  <li><router-link to="#">FAQ</router-link></li>
+            <li><router-link to="/cart">Shoping Cart</router-link></li>
+            <li><router-link to="/checkout">Check Out</router-link></li>
+            <li><router-link to="#">Privacy Policy</router-link></li>
+            <li><router-link to="#">Terms & Conditions</router-link></li>
+            <li><router-link to="#">FAQ</router-link></li>
           </ul>
         </li>
         <li><router-link to="/blog">Blog</router-link></li>
-              <li><router-link to="/contact">Contact</router-link></li>
+        <li><router-link to="/contact">Contact</router-link></li>
       </ul>
     </nav>
     <div id="mobile-menu-wrap"></div>
@@ -65,7 +69,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-    name: 'MobileNav'
-}
+  name: "MobileNav",
+  computed: mapGetters("cart", ["totalPrice", "cartItems"]),
+};
 </script>
