@@ -75,13 +75,15 @@
                 <a href="#"><i class="fa fa-heart"></i> <span>1</span></a>
               </li>
               <li>
-                <a href="#"
-                  ><i class="fa fa-shopping-bag"></i>
-                  <span> {{ cartItems.length }} </span></a
-                >
+                <router-link to="/cart">
+                  <i class="fa fa-shopping-bag"></i>
+                  <span> {{ cartItems.length }} </span>
+                </router-link>
               </li>
             </ul>
-            <div class="header__cart__price">item: <span>${{totalPrice.toFixed(2)}}</span></div>
+            <div class="header__cart__price">
+              item: <span>${{ totalPrice.toFixed(2) }}</span>
+            </div>
           </div>
         </div>
       </div>

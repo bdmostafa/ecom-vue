@@ -45,6 +45,8 @@
               min="1"
               :max="product.quantity >= 1 ? product.quantity : 0"
               ref="qtyInput"
+              readonly
+              style="text-align: end"
             />
             <div
               @click="updateQty(product._id, true, product.quantity)"
@@ -136,13 +138,23 @@ export default {
     //   addToCart: ["cart/addToCart"],
     // }),
     ...mapActions("products", ["fetchProduct"]),
-    ...mapActions("cart", ["addToCart", "updateCart"]),
+    ...mapActions("cart", ["addToCart", "updateCart", "productIsAddedToCart"]),
+    productIsAddedToCart(id) {
+      const productInCartIndex = this.cartItems.findIndex(
+        (cart) => cart._id === id
+      );
+
+      if (productInCartIndex >= 0) {
+        this.isAdded = true;
+      } else {
+        this.isAdded = false;
+      }
+    },
     processToAdd(id) {
       this.addToCart(id);
       this.isAdded = true;
     },
     updateQty(id, isIncrease, productQty) {
-      // let inputValue = this.$refs.qtyInput.value;
       if (isIncrease) {
         productQty > this.$refs.qtyInput.value
           ? this.$refs.qtyInput.value++
@@ -170,15 +182,15 @@ export default {
   created() {
     this.fetchProduct(this.productId);
     this.getQtyInputValue(this.productId);
-    // this.isProductAdded(this.productId);
+    this.productIsAddedToCart(this.productId);
   },
-  // mounted: {
-  //   isStock() {
-  //     if (this.product.quantity === 0) {
-  //       return true
-  //     }
-  //     return false
-  //   }
+  // mounted() {
+    // isStock() {
+    //   if (this.product.quantity === 0) {
+    //     return true
+    //   }
+    //   return false
+    // }
   // },
 };
 </script>

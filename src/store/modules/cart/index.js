@@ -5,6 +5,7 @@ export default {
       cartItems: [],
       cartTotal: 0,
       totalPrice: 0,
+      productIsAdded: false
     };
   },
   mutations: {
@@ -17,6 +18,7 @@ export default {
 
       if (productInCartIndex >= 0) {
         // When a product is in cart already, return here
+        alert("This product has been added already")
         return;
       }
       // When a product is in cart newly
@@ -26,9 +28,11 @@ export default {
           image: productData.image,
           title: productData.title,
           price: productData.price,
+          quantity: productData.quantity,
           qtyOrdered: 1,
         };
         state.cartItems.push(newItem);
+        alert("Product is added to cart")
       }
 
       state.cartTotal++;
@@ -51,7 +55,6 @@ export default {
             ? (state.cartItems[productInCartIndex].qtyOrdered++,
               (state.totalPrice += product.price))
             : product.quantity;
-
         } else {
           // Decrease by one upto one in cart
           state.cartItems[productInCartIndex].qtyOrdered > 1
@@ -59,9 +62,36 @@ export default {
               (state.totalPrice -= product.price))
             : 1;
         }
-        console.log(state.cartItems);
+        // console.log(state.cartItems);
       } else {
         alert("Please Add to cart first");
+      }
+    },
+    REMOVE_FROM_CART(state, payload) {
+      const productId = payload;
+      const productInCartIndex = state.cartItems.findIndex(
+        (cartItem) => cartItem._id === productId
+      );
+
+      if (productInCartIndex >= 0) {
+        const productData = state.cartItems[productInCartIndex];
+
+        state.cartItems.splice(productInCartIndex, 1);
+
+        state.cartTotal--;
+        state.totalPrice -= productData.price * productData.qtyOrdered;
+      } else return;
+    },
+    PRODUCT_IS_ADDED_TO_CART(state, payload) {
+      const productId = payload;
+      const productInCartIndex = state.cartItems.findIndex(
+        (cartItem) => cartItem._id === productId
+      );
+
+      if (productInCartIndex >= 0) {
+        this.productIsAdd = true;
+      } else {
+        this.productIsAdd = false;
       }
     },
   },
@@ -87,6 +117,12 @@ export default {
 
       commit("UPDATE_CART", { selectedProduct, isIncrease });
     },
+    removeFromCart({ commit }, payload) {
+      commit("REMOVE_FROM_CART", payload);
+    },
+    productIsAddedToCart({ commit }, payload) {
+      commit("PRODUCT_IS_ADDED_TO_CART", payload);
+    },
   },
   getters: {
     cartItems(state) {
@@ -98,5 +134,8 @@ export default {
     totalPrice(state) {
       return state.totalPrice;
     },
+    productIsAdded(state) {
+        return state.productIsAdded;
+    }
   },
 };

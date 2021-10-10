@@ -50,9 +50,9 @@
                     <a href="#"><i class="fa fa-retweet"></i></a>
                   </li>
                   <li>
-                    <router-link :to="`/products/${product._id}`"
+                    <a href="#" @click="addToCart(product._id)"
                       ><i class="fa fa-shopping-cart"></i
-                    ></router-link>
+                    ></a>
                   </li>
                 </ul>
               </div>
@@ -85,6 +85,7 @@
                 :disabled="product.quantity === 0"
                 :class="{ disabled: product.quantity === 0 }"
                 class="btn btn__addToCart"
+                @click="addToCart(product._id)"
               >
                 Add To Cart
               </button>
@@ -110,6 +111,7 @@ export default {
   },
   methods: {
     ...mapActions("products", ["getCategories", "getFilteredProducts"]),
+    ...mapActions("cart", ["addToCart"]),
     processAll() {
       this.isAll = true;
       this.isFiltered = false;
@@ -133,7 +135,7 @@ export default {
 
 <style scoped>
 .featured__filter {
-    justify-content: center;
+  justify-content: center;
 }
 .featured__item {
   height: 30rem;
