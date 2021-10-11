@@ -1,9 +1,12 @@
 <template>
-    Checkout
+    {{ isAuthenticated ? 'auth' : 'not auth'}}
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
-    name: 'Checkout'
+    name: 'Checkout',
+    computed: mapGetters('login', ["isAuthenticated"])
 }
 </script>

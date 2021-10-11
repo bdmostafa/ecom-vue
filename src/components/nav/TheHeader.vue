@@ -30,10 +30,14 @@
                   <li><a href="#">English</a></li>
                 </ul>
               </div>
-              <div class="header__top__right__auth">
-                <router-link to="/login"
-                  ><i class="fa fa-user"></i> Login</router-link
-                >
+              <div class="header__top__right__auth" v-if="!isAuthenticated">
+                <router-link to="/login">
+                  <i class="fa fa-user"></i>
+                  Login
+                </router-link>
+              </div>
+              <div v-if="isAuthenticated" class="header__top__right__auth">
+                <h4>Hi, {{ loggedInUser.user.name }}!</h4>
               </div>
             </div>
           </div>
@@ -103,7 +107,10 @@ export default {
   components: {
     MobileNav,
   },
-  computed: mapGetters("cart", ["totalPrice", "cartItems"]),
+  computed: {
+    ...mapGetters("cart", ["totalPrice", "cartItems"]),
+    ...mapGetters("login", ["isAuthenticated", "loggedInUser"]),
+  },
 };
 </script>
 

@@ -11,7 +11,8 @@
         </li>
         <li>
           <router-link to="/cart"
-            ><i class="fa fa-shopping-bag"></i> <span> {{ cartItems.length }} </span></router-link
+            ><i class="fa fa-shopping-bag"></i>
+            <span> {{ cartItems.length }} </span></router-link
           >
         </li>
       </ul>
@@ -29,8 +30,12 @@
           <li><a href="#">English</a></li>
         </ul>
       </div>
-      <div class="header__top__right__auth">
+      <div class="header__top__right__auth" v-if="!isAuthenticated">
         <router-link to="/login"><i class="fa fa-user"></i> Login</router-link>
+      </div>
+      <div v-if="isAuthenticated" class="header__top__right__auth">
+        <h4>Hi, {{ loggedInUser.user.name }}!</h4>
+        <h6> {{ }} Logout </h6>
       </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
@@ -73,6 +78,9 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "MobileNav",
-  computed: mapGetters("cart", ["totalPrice", "cartItems"]),
+  computed: {
+    ...mapGetters("cart", ["totalPrice", "cartItems"]),
+    ...mapGetters("login", ["isAuthenticated", "loggedInUser"]),
+  },
 };
 </script>
