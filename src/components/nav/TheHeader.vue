@@ -37,7 +37,12 @@
                 </router-link>
               </div>
               <div v-if="isAuthenticated" class="header__top__right__auth">
-                <h4>Hi, {{ loggedInUser.user.name }}!</h4>
+                <div>
+                  <h4>Hi, {{ loggedInUser.user.name }}!</h4>
+                  <button class="btn btn-success ml-2" @click="processLogout">
+                    Logout
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -102,12 +107,18 @@
 
 <script>
 import MobileNav from "./MobileNav.vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "TheHeader",
   components: {
     MobileNav,
+  },
+  methods: {
+    ...mapActions("login", ["logout"]),
+    processLogout() {
+      this.logout(this.loggedInUser.token);
+    },
   },
   computed: {
     ...mapGetters("cart", ["totalPrice", "cartItems"]),
@@ -116,4 +127,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.header__top__right__auth div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

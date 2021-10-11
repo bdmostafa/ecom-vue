@@ -26,32 +26,44 @@ export default {
   },
   actions: {
     async login({ commit }, payload) {
-      const response = await axios.post(
-        `https://ecombs.herokuapp.com/users/login`,
-        { ...payload }
-      );
-
-      const userData = response.data;
-      commit("LOGIN", userData);
+      await axios
+        .post(`https://ecombs.herokuapp.com/users/login`, { ...payload })
+        .then((response) => {
+          const userData = response.data;
+          commit("LOGIN", userData);
+        })
+        .catch((error) => {
+          alert(error.response.data);
+        });
     },
-    async logout({ commit }) {
+    async logout({ commit }, payload) {
+      // console.log(payload)
       const response = await axios.post(
         `https://ecombs.herokuapp.com/users/logout`,
-        {}
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + payload,
+          },
+        }
       );
 
       const userData = response.data;
       commit("LOGOUT", userData);
     },
     async createAccount({ commit }, payload) {
-      console.log(payload);
-      const response = await axios.post(
-        `https://ecombs.herokuapp.com/users/create`,
-        { ...payload, role: "user" }
-      );
-
-      const userData = response.data;
-      commit("CREATE_ACCOUNT", userData);
+      await axios
+        .post(`https://ecombs.herokuapp.com/users/create`, {
+          ...payload,
+          role: "user",
+        })
+        .then((response) => {
+          const userData = response.data;
+          commit("CREATE_ACCOUNT", userData);
+        })
+        .catch((error) => {
+          alert(error.response.data);
+        });
     },
   },
   getters: {

@@ -1,5 +1,9 @@
 <template>
-  <div class="container" :style="isNewAccount ? { height: '600px' } : ''">
+  <div
+    v-if="!isLoading"
+    class="container"
+    :style="isNewAccount ? { height: '600px' } : ''"
+  >
     <div class="row">
       <h2>
         <i class="fa fa-lock" aria-hidden="true"></i>
@@ -17,7 +21,7 @@
           name="name"
           class="form-control"
           placeholder="name"
-          v-model="user.name"
+          v-model.trim="user.name"
         />
       </div>
       <br />
@@ -31,7 +35,7 @@
           name="email"
           class="form-control"
           placeholder="email"
-          v-model="user.email"
+          v-model.trim="user.email"
         />
       </div>
       <br />
@@ -44,7 +48,7 @@
           name="password"
           class="form-control"
           placeholder="password"
-          v-model="user.password"
+          v-model.trim="user.password"
         />
       </div>
       <br />
@@ -57,7 +61,7 @@
           name="confirmPassword"
           class="form-control"
           placeholder="confirm password"
-          v-model="user.confirmPassword"
+          v-model.trim="user.confirmPassword"
         />
       </div>
       <br />
@@ -68,7 +72,8 @@
       <br />
       <div></div>
       <button type="submit" class="btn btn-success mr-2">
-        <span class="glyphicon glyphicon-off"></span> {{ isNewAccount ? 'Register' : 'Login'}}
+        <span class="glyphicon glyphicon-off"></span>
+        {{ isNewAccount ? "Register" : "Login" }}
       </button>
 
       <button type="submit" class="btn btn-info">
@@ -93,13 +98,18 @@
       <p>Forgot <a href="#">Password?</a></p>
     </div>
   </div>
+  <Circle8 style="width: 100%" v-if="isLoading"></Circle8>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { Circle8 } from "vue-loading-spinner";
 
 export default {
   name: "Login",
+  components: {
+    Circle8,
+  },
   data() {
     return {
       isNewAccount: false,
@@ -109,15 +119,19 @@ export default {
         password: "",
         confirmPassword: "",
       },
+      isLoading: false,
     };
   },
   methods: {
     ...mapActions("login", ["login", "createAccount"]),
-    onSUbmit() {
-      console.log(this.user);
+    async onSUbmit() {
+      // console.log(this.user);
       if (this.ValidateEmail(this.user.email) === false) {
         alert("Please provide a valid Email address");
+        return;
       }
+
+      this.isLoading = true;
 
       if (this.isNewAccount) {
         if (
@@ -127,18 +141,33 @@ export default {
           ) === false
         ) {
           alert("Confirm password not match. Please try again!");
+          return;
         }
-        this.createAccount({ ...this.user });
 
-        if(this.successMessage) {
-            this.isNewAccount = false;
+        try {
+          await this.createAccount({ ...this.user });
+        } catch (err) {
+          console.log(err);
+        }
+        this.isLoading = false;
+
+        if (this.successMessage) {
+          this.isNewAccount = false;
         }
       } else {
         const loginData = {
           email: this.user.email,
           password: this.user.password,
         };
-        this.login(loginData);
+
+        try {
+          await this.login(loginData);
+          this.$router.replace('/checkout')
+        } catch (err) {
+          console.log(err);
+        }
+
+        this.isLoading = false;
       }
     },
     ValidateEmail(mail) {

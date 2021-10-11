@@ -15,3 +15,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.spinner--circle-8 {
+  min-height: 50vh;
+  width: 100%;
+}
+</style>
