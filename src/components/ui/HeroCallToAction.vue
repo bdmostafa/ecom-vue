@@ -39,13 +39,10 @@
               </div>
             </div>
           </div>
-          <div
-            class="hero__item set-bg"
-            data-setbg="assets/img/hero/banner.jpg"
-          >
+          <div class="hero__item set-bg">
             <div class="hero__text">
-              <span>Unique Design</span>
-              <h2>Vegetable <br />100% Organic</h2>
+              <span>Winter Design</span>
+              <h2>Winter Collection<br />100% Unique</h2>
               <p>Free Pickup and Delivery Available</p>
               <router-link to="/shop" class="primary-btn">SHOP NOW</router-link>
             </div>
@@ -64,3 +61,42 @@ export default {
   computed: mapGetters("products", ["categories"]),
 };
 </script>
+
+<style scoped>
+.hero__text h2 {
+  font-size: 50px;
+  color: ghostwhite;
+  line-height: 50px;
+  font-weight: 700;
+  margin: 10px 0px;
+}
+.hero__categories__all:after {
+  position: absolute;
+  right: 18px;
+  top: 9px;
+  content: "";
+  font-family: "ElegantIcons";
+  font-size: 18px;
+  color: #ffffff;
+}
+.hero__text span {
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 10px;
+  color: black;
+}
+.hero__item {
+  height: 431px;
+  display: flex;
+  align-items: center;
+  padding-left: 75px;
+  background-image: url(https://cdn.pixabay.com/photo/2015/08/17/18/27/shopping-892811_1280.jpg);
+}
+.hero__text p {
+  margin-bottom: 35px;
+  color: ghostwhite;
+  font-size: 22px;
+  margin-top: 20px;
+}
+</style>

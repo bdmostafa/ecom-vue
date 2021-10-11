@@ -48,7 +48,9 @@
       <div class="row">
         <div class="col-lg-3">
           <div class="header__logo">
-            <router-link to="/" class="logo">Ecom Vue</router-link>
+            <router-link to="/" class="logo">
+              <img src="../../../public/assets/img/logo/logo.png" alt="" />
+            </router-link>
           </div>
         </div>
         <div class="col-lg-6">

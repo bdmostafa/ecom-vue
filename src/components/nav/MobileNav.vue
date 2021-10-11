@@ -2,7 +2,9 @@
   <div class="humberger__menu__overlay"></div>
   <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
-      <a href="#" class="logo">Ecom-Vue</a>
+      <router-link to="/" class="logo">
+        <img src="../../../public/assets/img/logo/logo.png" alt="" />
+      </router-link>
     </div>
     <div class="humberger__menu__cart">
       <ul>
@@ -35,7 +37,7 @@
       </div>
       <div v-if="isAuthenticated" class="header__top__right__auth">
         <h4>Hi, {{ loggedInUser.user.name }}!</h4>
-        <h6> {{ }} Logout </h6>
+        <h6> Logout</h6>
       </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">

@@ -6,16 +6,22 @@ export default {
     return {
       isLoggedIn: false,
       loggedInUser: {},
+      success: "",
     };
   },
   mutations: {
     LOGIN(state, payload) {
       state.isLoggedIn = true;
       state.loggedInUser = payload;
+      state.success = payload.success.message;
     },
     LOGOUT(state) {
       state.isLoggedIn = false;
       state.loggedInUser = {};
+    },
+    CREATE_ACCOUNT(state, payload) {
+      state.isLoggedIn = false;
+      state.success = payload.success.message;
     },
   },
   actions: {
@@ -37,6 +43,16 @@ export default {
       const userData = response.data;
       commit("LOGOUT", userData);
     },
+    async createAccount({ commit }, payload) {
+      console.log(payload);
+      const response = await axios.post(
+        `https://ecombs.herokuapp.com/users/create`,
+        { ...payload, role: "user" }
+      );
+
+      const userData = response.data;
+      commit("CREATE_ACCOUNT", userData);
+    },
   },
   getters: {
     isAuthenticated(state) {
@@ -44,6 +60,9 @@ export default {
     },
     loggedInUser(state) {
       return state.loggedInUser;
+    },
+    successMessage(state) {
+      return state.success;
     },
   },
 };
