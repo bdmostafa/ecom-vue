@@ -12,6 +12,7 @@ import Category from "./pages/Category.vue";
 import ProductDetails from "./components/products/ProductDetails.vue";
 import AboutUs from './pages/AboutUs.vue'
 import PrivacyPolicy from './pages/PrivacyPolicy.vue'
+import NotFound from './pages/NotFound.vue'
 
 // const isLoggedIn = store.getters["login/isAuthenticated"];
 
@@ -47,6 +48,7 @@ const router = createRouter({
     { path: "/contact", component: Contact },
     { path: "/category/:category", component: Category },
     { path: "/products/:productId", component: ProductDetails },
+    { path: '/:notFound(.*)*', component: NotFound },
   ],
 });
 
