@@ -1,3 +1,9 @@
+import {
+  successToaster,
+  infoToaster,
+  errorToaster
+} from "../../../components/shared/service/Hendler.js";
+
 export default {
   namespaced: true,
   state() {
@@ -5,7 +11,7 @@ export default {
       cartItems: [],
       cartTotal: 0,
       totalPrice: 0,
-      productIsAdded: false
+      productIsAdded: false,
     };
   },
   mutations: {
@@ -18,7 +24,7 @@ export default {
 
       if (productInCartIndex >= 0) {
         // When a product is in cart already, return here
-        alert("This product has been added already")
+        infoToaster("Add To Cart", "This product has already been added.");
         return;
       }
       // When a product is in cart newly
@@ -32,7 +38,11 @@ export default {
           qtyOrdered: 1,
         };
         state.cartItems.push(newItem);
-        alert("Product is added to cart")
+
+        successToaster(
+          "Add To Cart",
+          `${productData.title} has been added successfully`
+        );
       }
 
       state.cartTotal++;
@@ -64,7 +74,7 @@ export default {
         }
         // console.log(state.cartItems);
       } else {
-        alert("Please Add to cart first");
+        errorToaster("Update Cart", "You must add to cart first");
       }
     },
     REMOVE_FROM_CART(state, payload) {
@@ -80,7 +90,12 @@ export default {
 
         state.cartTotal--;
         state.totalPrice -= productData.price * productData.qtyOrdered;
-      } else return;
+
+        successToaster("Remove From Cart", `${productData.title} has been removed successfully`)
+      } else {
+        errorToaster("Remove From Cart", "Something went wrong. Please try again")
+        return;
+      }
     },
     PRODUCT_IS_ADDED_TO_CART(state, payload) {
       const productId = payload;
@@ -135,7 +150,7 @@ export default {
       return state.totalPrice;
     },
     productIsAdded(state) {
-        return state.productIsAdded;
-    }
+      return state.productIsAdded;
+    },
   },
 };

@@ -1,4 +1,8 @@
 import axios from "axios";
+import {
+    successToaster,
+    errorToaster,
+  } from "../../../components/shared/service/Hendler.js";
 
 export default {
   namespaced: true,
@@ -28,6 +32,7 @@ export default {
           const paymentInfo = response.data;
           // console.log(paymentInfo);
           if (paymentInfo) {
+            successToaster("Payment Status", "Your payment is accepted successfully")
             axios
               .post("https://ecombs.herokuapp.com/orders/create", cartData, {
                 headers: {
@@ -38,15 +43,15 @@ export default {
                 const orderData = response.data;
                 console.log(orderData);
                 commit("CREATE_ORDER", orderData);
-                alert("You have ordered successfully");
+                successToaster("Order Status", "You have ordered successfully")
               })
               .catch((error) => {
-                alert(error.response.data);
+                errorToaster("Order Status", error.response.data);
               });
           }
         })
         .catch((error) => {
-          alert(error.response.data);
+            errorToaster("Order Status", error.response.data);
         });
     },
     async getMyOrders({ commit }, payload) {
@@ -60,12 +65,13 @@ export default {
           })
           .then((response) => {
             const ordersData = response.data;
-            console.log(ordersData);
+            // console.log(ordersData);
             commit("GET_MY_ORDERS", ordersData);
+            successToaster("My Order", "Your order is loaded successfully");
             
           })
           .catch((error) => {
-            alert(error.response.data);
+            errorToaster("My Order", error.response.data);
           });
       },
   },

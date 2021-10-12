@@ -1,4 +1,8 @@
 import axios from "axios";
+import {
+  successToaster,
+  errorToaster,
+} from "../../../components/shared/service/Hendler.js";
 
 export default {
   namespaced: true,
@@ -14,6 +18,7 @@ export default {
       state.isLoggedIn = true;
       state.loggedInUser = payload;
       state.success = payload.success.message;
+      successToaster("Login Status", "You have logged in successfully.");
     },
     LOGOUT(state) {
       state.isLoggedIn = false;
@@ -33,23 +38,29 @@ export default {
           commit("LOGIN", userData);
         })
         .catch((error) => {
-          alert(error.response.data);
+          errorToaster("Login Status", error.response.data);
         });
     },
     async logout({ commit }, payload) {
       // console.log(payload)
-      const response = await axios.post(
-        `https://ecombs.herokuapp.com/users/logout`,
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + payload,
-          },
-        }
-      );
-
-      const userData = response.data;
-      commit("LOGOUT", userData);
+      await axios
+        .post(
+          `https://ecombs.herokuapp.com/users/logout`,
+          {},
+          {
+            headers: {
+              Authorization: "Bearer " + payload,
+            },
+          }
+        )
+        .then((response) => {
+          const userData = response.data;
+          commit("LOGOUT", userData);
+          successToaster("Logout Status", "You have logged out successfully.");
+        })
+        .catch((error) => {
+          errorToaster("Logout Status", error.response.data);
+        });
     },
     async createAccount({ commit }, payload) {
       await axios
@@ -60,9 +71,10 @@ export default {
         .then((response) => {
           const userData = response.data;
           commit("CREATE_ACCOUNT", userData);
+          successToaster("New Register", "You have been registered successfully.")
         })
         .catch((error) => {
-          alert(error.response.data);
+          errorToaster("Logout Status", error.response.data);
         });
     },
   },

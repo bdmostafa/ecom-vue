@@ -6,8 +6,8 @@ import ProductCard from "./components/products/ProductCard.vue";
 import ShopProducts from "./components/products/ShopProducts.vue";
 import store from "./store/index.js";
 import 'bootstrap/dist/css/bootstrap.min.css'
-// import 'jquery/src/jquery.js'
-// import 'bootstrap/dist/js/bootstrap.min.js'
+import 'toastr/build/toastr.min.css'
+import 'toastr/build/toastr.min.css'
 
 const app = createApp(App);
 
