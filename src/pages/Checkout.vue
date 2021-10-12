@@ -1,12 +1,16 @@
 <template>
-    {{ isAuthenticated ? 'auth' : 'not auth'}}
+  <checkout-layout>
+    <slot></slot>
+  </checkout-layout>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import CheckoutLayout from "../components/checkout/Checkout.vue";
 
 export default {
-    name: 'Checkout',
-    computed: mapGetters('login', ["isAuthenticated"])
-}
+  name: "Checkout",
+  components: {
+    CheckoutLayout,
+  },
+};
 </script>
