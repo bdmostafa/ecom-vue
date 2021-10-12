@@ -13,6 +13,7 @@ import ProductDetails from "./components/products/ProductDetails.vue";
 import AboutUs from "./pages/AboutUs.vue";
 import PrivacyPolicy from "./pages/PrivacyPolicy.vue";
 import NotFound from "./pages/NotFound.vue";
+import UserDashboard from "./pages/UserDashboard.vue";
 
 // const isLoggedIn = store.getters["login/isAuthenticated"];
 
@@ -35,6 +36,23 @@ const router = createRouter({
           next();
         } else {
           // console.log("---------",isLoggedIn, store.getters["login/isAuthenticated"])
+          next({
+            name: "login",
+            query: {
+              from: to.name,
+            },
+          });
+        }
+      },
+    },
+    {
+      path: "/user-dashboard",
+      name: "user",
+      component: UserDashboard,
+      beforeEnter: (to, _, next) => {
+        if (store.getters["login/isAuthenticated"]) {
+          next();
+        } else {
           next({
             name: "login",
             query: {

@@ -5,7 +5,7 @@
     <div class="header__top">
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 col-md-6">
+          <div class="col-lg-5 col-md-4">
             <div class="header__top__left">
               <ul>
                 <li><i class="fa fa-envelope"></i> test@test.com</li>
@@ -13,7 +13,7 @@
               </ul>
             </div>
           </div>
-          <div class="col-lg-6 col-md-6">
+          <div class="col-lg-7 col-md-8">
             <div class="header__top__right">
               <div class="header__top__right__social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
@@ -39,6 +39,13 @@
               <div v-if="isAuthenticated" class="header__top__right__auth">
                 <div>
                   <h4>Hi, {{ loggedInUser.user.name }}!</h4>
+
+                  <button class="btn btn-success ml-2">
+                    <router-link style="color: #fff" to="/user-dashboard">
+                      My Dashboard
+                    </router-link>
+                  </button>
+
                   <button class="btn btn-success ml-2" @click="processLogout">
                     Logout
                   </button>
@@ -124,10 +131,11 @@ export default {
   },
   methods: {
     ...mapActions("login", ["logout"]),
+    ...mapActions("order", ["getMyOrders"]),
     async processLogout() {
       try {
         await this.logout(this.loggedInUser.token);
-        this.$router.replace('/login')
+        this.$router.replace("/login");
       } catch (err) {
         alert("Something went wrong. Please try again.");
       }
@@ -145,5 +153,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.btn__dashboard{
+  display: inline-block;
+  font-size: 14px;
+  padding: 10px 28px 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: #7fad39;
+  letter-spacing: 2px;
 }
 </style>
