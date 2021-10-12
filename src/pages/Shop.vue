@@ -1,9 +1,11 @@
 <template>
-    Shop
+  <shop-products>
+    <slot></slot>
+  </shop-products>
 </template>
 
 <script>
 export default {
-    name: 'Shop'
-}
+  name: "Shop",
+};
 </script>
