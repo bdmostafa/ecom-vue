@@ -103,13 +103,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { Circle8 } from "vue-loading-spinner";
 
 export default {
   name: "Login",
-  components: {
-    Circle8,
-  },
   data() {
     return {
       isNewAccount: false,
@@ -146,8 +142,10 @@ export default {
 
         try {
           await this.createAccount({ ...this.user });
+          this.$router.replace('/login')
         } catch (err) {
           console.log(err);
+          this.$router.back()
         }
         this.isLoading = false;
 

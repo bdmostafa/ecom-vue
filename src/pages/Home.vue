@@ -3,7 +3,8 @@
 
   <product-carousel></product-carousel>
 
-  <featured-products></featured-products>
+  <featured-products v-if="!isLoading"></featured-products>
+  <Circle8 style="width: 100%" v-if="isLoading"></Circle8>
 
   <banner></banner>
 
@@ -24,6 +25,11 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   components: {
     HeroCallToAction,
     ProductCarousel,
@@ -33,18 +39,22 @@ export default {
     BlogSection,
   },
   methods: {
-      ...mapActions('products', ['fetchProducts']),
+    ...mapActions("products", ["fetchProducts"]),
     //   loadProducts() {
-        //   this.products = this.$store.getters['products/products']
-        //   console.log(this.products)
+    //   this.products = this.$store.getters['products/products']
+    //   console.log(this.products)
     //   },
-
   },
   computed: {
-      ...mapGetters('products', ['products']),
+    ...mapGetters("products", ["products"]),
   },
   created() {
+    this.isLoading = true;
+
+    setTimeout(() => {
       this.fetchProducts();
-  }
+      this.isLoading = false;
+    }, 1500);
+  },
 };
 </script>

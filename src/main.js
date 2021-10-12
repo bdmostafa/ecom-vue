@@ -8,6 +8,7 @@ import store from "./store/index.js";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'toastr/build/toastr.min.css'
 import 'toastr/build/toastr.min.css'
+import { Circle8 } from "vue-loading-spinner";
 
 const app = createApp(App);
 
@@ -18,5 +19,6 @@ app.use(store);
 app.component("Footer", Footer);
 app.component("ProductCard", ProductCard);
 app.component("ShopProducts", ShopProducts);
+app.component('Circle8', Circle8)
 
 app.mount("#app");

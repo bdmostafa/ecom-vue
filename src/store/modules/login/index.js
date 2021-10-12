@@ -74,7 +74,7 @@ export default {
           successToaster("New Register", "You have been registered successfully.")
         })
         .catch((error) => {
-          errorToaster("Logout Status", error.response.data);
+          errorToaster(error.response.statusText, error.response.data[0].msg);
         });
     },
   },

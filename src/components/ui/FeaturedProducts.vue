@@ -107,6 +107,7 @@ export default {
       isAll: true,
       isFilter: false,
       categoryName: "",
+      isLoading: false,
     };
   },
   methods: {

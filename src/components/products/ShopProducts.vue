@@ -1,6 +1,6 @@
 <template>
   <section class="featured spad">
-    <div class="container">
+    <div v-if="!isLoading && products.length > 0" class="container">
       <div v-for="(arrayOfProducts, idx) in categorizedProducts" :key="idx">
         <div class="row">
           <div class="col-lg-12">
@@ -81,6 +81,7 @@
         </div>
       </div>
     </div>
+    <Circle8 style="width: 100%" v-if="isLoading"></Circle8>
   </section>
 </template>
 
@@ -92,10 +93,12 @@ export default {
   data() {
     return {
       categorizedProducts: {},
+      isLoading: false,
     };
   },
   methods: {
     ...mapActions("cart", ["addToCart"]),
+    ...mapActions("products", ["fetchProducts"]),
     getCategorizedProducts() {
       this.products.forEach((p) => {
         if (
@@ -117,7 +120,14 @@ export default {
   computed: mapGetters("products", ["products"]),
 
   created() {
+    this.isLoading = true;
+
+    this.fetchProducts();
     this.getCategorizedProducts();
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500);
   },
 };
 </script>
