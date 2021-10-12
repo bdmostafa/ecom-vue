@@ -10,6 +10,8 @@ import Contact from "./pages/Contact.vue";
 import Login from "./pages/Login.vue";
 import Category from "./pages/Category.vue";
 import ProductDetails from "./components/products/ProductDetails.vue";
+import AboutUs from './pages/AboutUs.vue'
+import PrivacyPolicy from './pages/PrivacyPolicy.vue'
 
 // const isLoggedIn = store.getters["login/isAuthenticated"];
 
@@ -21,6 +23,8 @@ const router = createRouter({
     { path: "/cart", component: Cart },
     { path: "/shop", component: Shop },
     { path: "/login", name: "login", component: Login },
+    { path: "/about-us", component: AboutUs },
+    { path: "/privacy-policy", component: PrivacyPolicy },
     {
       path: "/checkout",
       name: "checkout",

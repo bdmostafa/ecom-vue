@@ -66,12 +66,12 @@
               <li>
                 <a href="#">Pages</a>
                 <ul class="header__menu__dropdown">
-                  <li><router-link to="#">About Us</router-link></li>
+                  <li><router-link to="/about-us">About Us</router-link></li>
                   <li><router-link to="/cart">Shoping Cart</router-link></li>
                   <li><router-link to="/checkout">Check Out</router-link></li>
-                  <li><router-link to="#">Privacy Policy</router-link></li>
-                  <li><router-link to="#">Terms & Conditions</router-link></li>
-                  <li><router-link to="#">FAQ</router-link></li>
+                  <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
+                  <li><router-link to="/terms-and-conditions">Terms & Conditions</router-link></li>
+                  <li><router-link to="/faq">FAQ</router-link></li>
                 </ul>
               </li>
               <li><router-link to="/blog">Blog</router-link></li>
