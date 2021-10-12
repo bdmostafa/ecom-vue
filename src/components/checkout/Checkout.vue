@@ -1,82 +1,76 @@
 <template>
-  <div>
-    <div class="section" v-If="cartItems.length">
-      <div class="container">
+  <div v-if="isAuthenticated">
+    <div class="text-center my-5" v-if="!cartItems.length">
+      <h4>Cart Is Empty</h4>
+      <button class="btn btn__goToShop btn-lg mt-3">
+        <router-link style="color: #fff" to="/shop">
+          GO TO SHOP
+        </router-link>
+      </button>
+    </div>
+    <!-- <div class="section" v-show="cartItems.length > 0"> -->
+    <div class="section">
+      <div class="container" v-if="cartItems.length">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-5">
             <!-- Billing Details -->
-            <div class="billing-details">
-              <div class="section-title">
-                <h3 class="title">Billing address</h3>
-              </div>
-              <div class="form-group">
-                <input
-                  class="input"
-                  type="text"
-                  name="full-name"
-                  placeholder="Full Name"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  class="input"
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  class="input"
-                  type="text"
-                  name="address"
-                  placeholder="Full Address"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  class="input"
-                  type="tel"
-                  name="tel"
-                  placeholder="Telephone"
-                />
-              </div>
-              <div class="form-group">
-                <div class="input-checkbox">
-                  <input type="checkbox" id="create-account" />
-                  <label for="create-account">
-                    <span></span>
-                    Create Account?
-                  </label>
-                  <div class="caption">
-                    <p>To create an account, just enter a password.</p>
-                    <input
-                      class="input"
-                      type="password"
-                      name="password"
-                      placeholder="Enter Your Password"
-                    />
-                  </div>
-                </div>
-              </div>
+            <div class="section__title">
+              <h3 class="title">Billing address</h3>
             </div>
+            <div class="form-group">
+              <input
+                class="checkout__input"
+                type="text"
+                name="full-name"
+                placeholder="Full Name"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                class="checkout__input"
+                type="email"
+                name="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                class="checkout__input"
+                type="text"
+                name="address"
+                placeholder="Full Address"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                class="checkout__input"
+                type="tel"
+                name="tel"
+                placeholder="Telephone"
+              />
+            </div>
+
             <!-- /Billing Details -->
 
             <!-- Shipping Details -->
-            <div class="shiping-details">
-              <div class="section-title">
-                <h3 class="title">Shipping address</h3>
-              </div>
-              <div class="input-checkbox">
-                <input type="checkbox" id="shiping-address" />
-                <label for="shiping-address">
-                  <span></span>
-                  Ship to a different address?
-                </label>
+            <div class="section__title">
+              <h3 class="title">Shipping address</h3>
+            </div>
+            <div>
+              <input
+                class="mr-2"
+                type="checkbox"
+                id="shiping-address"
+                @click="isShipToDifferentAddress = !isShipToDifferentAddress"
+              />
+              <label for="shiping-address">
+                <span> Ship to a different address? </span>
+              </label>
+              <div v-if="isShipToDifferentAddress">
                 <div class="caption">
                   <div class="form-group">
                     <input
-                      class="input"
+                      class="checkout__input"
                       type="text"
                       name="full-name"
                       placeholder="Full Name"
@@ -84,7 +78,7 @@
                   </div>
                   <div class="form-group">
                     <input
-                      class="input"
+                      class="checkout__input"
                       type="email"
                       name="email"
                       placeholder="Email"
@@ -92,7 +86,7 @@
                   </div>
                   <div class="form-group">
                     <input
-                      class="input"
+                      class="checkout__input"
                       type="text"
                       name="address"
                       placeholder="Full Address"
@@ -100,7 +94,7 @@
                   </div>
                   <div class="form-group">
                     <input
-                      class="input"
+                      class="checkout__input"
                       type="tel"
                       name="tel"
                       placeholder="Telephone"
@@ -113,10 +107,10 @@
 
             <!-- Order notes -->
             <div class="order-notes">
-              <div class="section-title">
-                <h3 class="title mb-3">Other Notes</h3>
+              <div class="section__title">
+                <h3 class="title mb-3">Other Notes (Optional)</h3>
                 <textarea
-                  class="input"
+                  class="checkout__input__textarea"
                   placeholder="Please write your necessary notes here..."
                 ></textarea>
               </div>
@@ -125,7 +119,7 @@
           </div>
 
           <!-- Order Details -->
-          <div class="col-md-6 order__details">
+          <div class="col-md-7 order__details">
             <div class="section-title text-center">
               <h3 class="title">Your Order</h3>
             </div>
@@ -138,6 +132,7 @@
                     <th>Subtotal</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   <tr v-for="cart in cartItems" :key="cart._id">
                     <td class="border-0">
@@ -177,52 +172,8 @@
               </table>
             </div>
 
-            <div class="payment__method">
-              <div class="input-radio">
-                <input type="radio" name="payment" id="payment-1" />
-                <label for="payment-1">
-                  <span></span>
-                  Direct Bank Transfer
-                </label>
-                <div class="caption">
-                  <p>
-                    Direct Bank Transfer, or Bank Account Clearing System
-                    (BACS), is a gateway that require no payment be made online
-                  </p>
-                </div>
-              </div>
-              <div class="input-radio">
-                <input type="radio" name="payment" id="payment-2" />
-                <label for="payment-2">
-                  <span></span>
-                  Cheque Payment
-                </label>
-                <div class="caption">
-                  <p>
-                    A Cheque is a document that orders a bank to pay a specific
-                    amount of money from a person's account to the person in
-                    whose name the cheque has been issued.
-                  </p>
-                </div>
-              </div>
-              <div class="input-radio">
-                <input type="radio" name="payment" id="payment-3" />
-                <label for="payment-3">
-                  <span></span>
-                  Paypal System
-                </label>
-                <div class="caption">
-                  <p>
-                    The PayPal is a tool that allows developers to test
-                    applications and explore the PayPal API in an environment
-                    that is isolated from PayPal's live site.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="input__checkbox">
-              <input type="checkbox" id="terms" />
+            <div>
+              <input class="mr-2" type="checkbox" id="terms" />
               <label for="terms">
                 <span></span>
                 I've read and accept the <a href="/">terms & conditions</a>
@@ -235,7 +186,7 @@
               </div>
             </div>
             <button
-              class="btn btn-outline-danger btn-lg mt-2 btn-block"
+              class="btn btn-outline-success btn-lg mt-2 btn-block mb-4"
               @click="processCheckout"
             >
               Place order
@@ -245,37 +196,52 @@
         </div>
       </div>
     </div>
-
-    <div class="text-center my-5" v-if="!cartItems.length">
-      <h4>Cart Is Empty</h4>
-      <button class="btn btn__goToShop btn-lg mt-3">
-        <router-link style="color: #fff" to="/shop"> GO TO SHOP </router-link>
-      </button>
-    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Checkout",
+  data() {
+    return {
+      isShipToDifferentAddress: false,
+    };
+  },
   methods: {
+    ...mapActions("order", ["checkoutFromCart"]),
     processCheckout() {
-      console.log("ok checkout");
+        const cartInfo = [];
+         this.cartItems.map((cart) => {
+            const product = cart._id;
+            const quantity = cart.qtyOrdered;
+            cartInfo.push({
+              product,
+              quantity,
+            });
+          });
+      this.checkoutFromCart({
+        cartInfo,
+        token: this.loggedInUser.token,
+      });
     },
   },
   computed: {
-    ...mapGetters("login", ["isAuthenticated"]),
+    ...mapGetters("login", ["isAuthenticated", "loggedInUser"]),
     ...mapGetters("cart", ["cartItems", "totalPrice"]),
   },
   created() {
-    console.log(this.cartItems, this.totalPrice);
+    // console.log(this.cartItems, this.totalPrice, this.isAuthenticated);
   },
 };
 </script>
 
 <style scoped>
+.section__title {
+  text-align: left;
+  margin: 20px 0 20px 0;
+}
 .btn__goToShop {
   display: inline-block;
   font-size: 14px;
@@ -285,5 +251,22 @@ export default {
   font-weight: 700;
   background: #7fad39;
   letter-spacing: 2px;
+}
+.checkout__input {
+  height: 40px;
+  padding: 0px 15px;
+  border: 1px solid #b3b8c2;
+  background-color: #fff;
+  width: 100%;
+}
+.form-group {
+  margin-bottom: -1rem;
+}
+.checkout__input__textarea {
+  height: 75px;
+  padding: 0px 15px;
+  border: 1px solid #b3b8c2;
+  background-color: #fff;
+  width: 100%;
 }
 </style>

@@ -162,7 +162,7 @@ export default {
 
         try {
           await this.login(loginData);
-          this.$router.replace('/checkout')
+          this.$router.back()
         } catch (err) {
           console.log(err);
         }

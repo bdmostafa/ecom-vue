@@ -69,8 +69,16 @@
                   <li><router-link to="/about-us">About Us</router-link></li>
                   <li><router-link to="/cart">Shoping Cart</router-link></li>
                   <li><router-link to="/checkout">Check Out</router-link></li>
-                  <li><router-link to="/privacy-policy">Privacy Policy</router-link></li>
-                  <li><router-link to="/terms-and-conditions">Terms & Conditions</router-link></li>
+                  <li>
+                    <router-link to="/privacy-policy"
+                      >Privacy Policy</router-link
+                    >
+                  </li>
+                  <li>
+                    <router-link to="/terms-and-conditions"
+                      >Terms & Conditions</router-link
+                    >
+                  </li>
                   <li><router-link to="/faq">FAQ</router-link></li>
                 </ul>
               </li>
@@ -116,8 +124,13 @@ export default {
   },
   methods: {
     ...mapActions("login", ["logout"]),
-    processLogout() {
-      this.logout(this.loggedInUser.token);
+    async processLogout() {
+      try {
+        await this.logout(this.loggedInUser.token);
+        this.$router.replace('/login')
+      } catch (err) {
+        alert("Something went wrong. Please try again.");
+      }
     },
   },
   computed: {

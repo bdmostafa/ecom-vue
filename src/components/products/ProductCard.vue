@@ -1,10 +1,10 @@
 <template>
-     <section class="featured spad">
+  <section class="featured spad">
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
           <div class="section-title">
-            <h2> {{ category }} Product</h2>
+            <h2>{{ category }} Product</h2>
           </div>
         </div>
       </div>
@@ -19,7 +19,6 @@
               <div
                 class="featured__item__pic set-bg"
                 :style="{ backgroundImage: `url(${product.image})` }"
-                :data-setbg="product.image"
               >
                 <p
                   class="featured__item__text__soldout"
@@ -35,9 +34,9 @@
                     <a href="#"><i class="fa fa-retweet"></i></a>
                   </li>
                   <li>
-                    <router-link :to="`/products/${product._id}`"
-                      ><i class="fa fa-shopping-cart"></i
-                    ></router-link>
+                    <a href="#" @click="addToCart(product._id)">
+                      <i class="fa fa-shopping-cart"></i>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -70,6 +69,7 @@
                 :disabled="product.quantity === 0"
                 :class="{ disabled: product.quantity === 0 }"
                 class="btn btn__addToCart"
+                @click="addToCart(product._id)"
               >
                 Add To Cart
               </button>
@@ -85,23 +85,23 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-    name: 'ProductCard',
-    props: ["category"],
-    methods: {
+  name: "ProductCard",
+  props: ["category"],
+  methods: {
     ...mapActions("products", ["getFilteredProducts"]),
   },
   computed: mapGetters("products", ["filteredProducts"]),
-  
-    created() {
-        this.getFilteredProducts(this.category)
-        // console.log("cat===", this.$route.params.category)
-    }
-}
+
+  created() {
+    this.getFilteredProducts(this.category);
+    // console.log("cat===", this.$route.params.category)
+  },
+};
 </script>
 
 <style scoped>
 .featured__filter {
-    justify-content: center;
+  justify-content: center;
 }
 .featured__item {
   height: 30rem;

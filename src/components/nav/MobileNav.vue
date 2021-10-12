@@ -24,7 +24,7 @@
     </div>
     <div class="humberger__menu__widget">
       <div class="header__top__right__language">
-        <img src="assets/img/language.png" alt="" />
+        <img src="../../../public/assets/img/language.png" alt="" />
         <div>English</div>
         <span class="arrow_carrot-down"></span>
         <ul>
@@ -37,7 +37,7 @@
       </div>
       <div v-if="isAuthenticated" class="header__top__right__auth">
         <h4>Hi, {{ loggedInUser.user.name }}!</h4>
-        <h6> Logout</h6>
+        <h6>Logout</h6>
       </div>
     </div>
     <nav class="humberger__menu__nav mobile-menu">
@@ -47,12 +47,18 @@
         <li>
           <a href="#">Pages</a>
           <ul class="header__menu__dropdown">
-            <li><router-link to="#">About Us</router-link></li>
+            <li><router-link to="/about-us">About Us</router-link></li>
             <li><router-link to="/cart">Shoping Cart</router-link></li>
             <li><router-link to="/checkout">Check Out</router-link></li>
-            <li><router-link to="#">Privacy Policy</router-link></li>
-            <li><router-link to="#">Terms & Conditions</router-link></li>
-            <li><router-link to="#">FAQ</router-link></li>
+            <li>
+              <router-link to="/privacy-policy">Privacy Policy</router-link>
+            </li>
+            <li>
+              <router-link to="/terms-and-conditions">
+                Terms & Conditions
+              </router-link>
+            </li>
+            <li><router-link to="/faq">FAQ</router-link></li>
           </ul>
         </li>
         <li><router-link to="/blog">Blog</router-link></li>

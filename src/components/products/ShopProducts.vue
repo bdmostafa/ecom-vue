@@ -36,9 +36,9 @@
                       <a href="#"><i class="fa fa-retweet"></i></a>
                     </li>
                     <li>
-                      <router-link :to="`/products/${product._id}`"
-                        ><i class="fa fa-shopping-cart"></i
-                      ></router-link>
+                      <a href="#" @click="addToCart(product._id)">
+                        <i class="fa fa-shopping-cart"></i>
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -71,6 +71,7 @@
                   :disabled="product.quantity === 0"
                   :class="{ disabled: product.quantity === 0 }"
                   class="btn btn__addToCart"
+                  @click="addToCart(product._id)"
                 >
                   Add To Cart
                 </button>
@@ -84,7 +85,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ShopProducts",
@@ -94,6 +95,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("cart", ["addToCart"]),
     getCategorizedProducts() {
       this.products.forEach((p) => {
         if (

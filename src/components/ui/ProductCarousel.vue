@@ -23,7 +23,7 @@ export default {
   name: "ProductCarousel",
   props: ['products'],
   created() {
-      console.log("carousel====", this.products)
+      // console.log("carousel====", this.products)
   }
 };
 </script>
