@@ -21,4 +21,6 @@ export default {
   min-height: 50vh;
   width: 100%;
 }
+
+/* @import '~bootstrap/dist/css/bootstrap.css' */
 </style>
