@@ -23,7 +23,14 @@
           </div>
         </div>
       </div>
-      <div class="row featured__filter">
+
+      <div
+        v-if="
+          !isLoading &&
+            (products.length > 0 || filteredProducts.length > 0)
+        "
+        class="row featured__filter"
+      >
         <div
           v-for="product in isAll ? products : filteredProducts"
           :key="product._id"
@@ -93,6 +100,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Loading Spinner -->
+      <Circle8 style="width: 100%; min-height: 20vh;" v-if="isLoading"></Circle8>
     </div>
   </section>
 </template>
@@ -119,22 +129,40 @@ export default {
       this.categoryName = "";
     },
     processFilter(category) {
+      this.isLoading = true;
       this.categoryName = category;
       this.getFilteredProducts(category);
       this.isAll = false;
       this.isFiltered = true;
+
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000)
+      
+    },
+    areProductsAvailable() {
+      if (this.products.length > 0) {
+        this.isLoading = false;
+      }
     },
   },
   computed: {
     ...mapGetters("products", ["products", "categories", "filteredProducts"]),
   },
   created() {
+    this.isLoading = true;
     this.getCategories();
+    setTimeout(() => {
+      this.areProductsAvailable();
+    }, 1500)
   },
 };
 </script>
 
 <style scoped>
+.featured {
+  padding-top: 25px;
+}
 .featured__filter {
   justify-content: center;
 }
@@ -170,6 +198,9 @@ export default {
 .featured__item__category {
   font-weight: bold;
   color: green;
+}
+.section-title {
+    margin-bottom: 30px;
 }
 .btn__addToCart {
   display: inline-block;

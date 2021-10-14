@@ -1,8 +1,19 @@
 import {
   successToaster,
   infoToaster,
-  errorToaster
+  errorToaster,
 } from "../../../components/shared/service/Hendler.js";
+
+const saveToLocalStorage = (items) => {
+  localStorage.setItem(
+    "cart",
+    JSON.stringify({
+      cartItems: items,
+      cartTotalInNumbers: this.cartTotal,
+      totalPrice: this.totalPrice,
+    })
+  );
+}
 
 export default {
   namespaced: true,
@@ -39,6 +50,8 @@ export default {
         };
         state.cartItems.push(newItem);
 
+        saveToLocalStorage(newItem);
+
         successToaster(
           "Add To Cart",
           `${productData.title} has been added successfully`
@@ -65,6 +78,15 @@ export default {
             ? (state.cartItems[productInCartIndex].qtyOrdered++,
               (state.totalPrice += product.price))
             : product.quantity;
+
+            localStorage.setItem(
+              "cart",
+              JSON.stringify({
+                cartItems: this.cartItems,
+                cartTotalInNumbers: this.cartTotal,
+                totalPrice: this.totalPrice,
+              })
+            );
         } else {
           // Decrease by one upto one in cart
           state.cartItems[productInCartIndex].qtyOrdered > 1
@@ -73,6 +95,14 @@ export default {
             : 1;
         }
         // console.log(state.cartItems);
+        localStorage.setItem(
+          "cart",
+          JSON.stringify({
+            cartItems: this.cartItems,
+            cartTotalInNumbers: this.cartTotal,
+            totalPrice: this.totalPrice,
+          })
+        );
       } else {
         errorToaster("Update Cart", "You must add to cart first");
       }
@@ -91,9 +121,15 @@ export default {
         state.cartTotal--;
         state.totalPrice -= productData.price * productData.qtyOrdered;
 
-        successToaster("Remove From Cart", `${productData.title} has been removed successfully`)
+        successToaster(
+          "Remove From Cart",
+          `${productData.title} has been removed successfully`
+        );
       } else {
-        errorToaster("Remove From Cart", "Something went wrong. Please try again")
+        errorToaster(
+          "Remove From Cart",
+          "Something went wrong. Please try again"
+        );
         return;
       }
     },

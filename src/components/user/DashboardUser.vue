@@ -82,7 +82,7 @@
                       mt-4
                     "
                 >
-                  ${{ prod.quantity * prod.product.price }}
+                  ${{ (prod.quantity * prod.product.price).toFixed(2) }}
                 </p>
               </td>
             </tr>
@@ -96,7 +96,7 @@
           <td><h5 style="font-weight: bold;">TOTAL</h5></td>
           <td>
             <h5 style="padding-left: 25px; font-weight: bold;">
-              {{ calculateTotal() }}
+              {{ calculateTotal.toFixed(2) }}
             </h5>
           </td>
         </tr>
@@ -137,8 +137,13 @@ export default {
       this.getMyOrders({ token: this.loggedInUser.token });
       this.showMyOrders = true;
     },
+  },
+  computed: {
+    ...mapGetters("order", ["myOrders"]),
+    ...mapGetters("login", ["loggedInUser"]),
+    
     // Calculate total price of loggedInUser orders
-    calculateTotal() {
+    calculateTotal: function() {
       let total = 0;
       if (this.myOrders.length > 0) {
         this.myOrders.forEach((orders) => {
@@ -151,10 +156,6 @@ export default {
         return total;
       } else return total;
     },
-  },
-  computed: {
-    ...mapGetters("order", ["myOrders"]),
-    ...mapGetters("login", ["loggedInUser"]),
   },
 };
 </script>

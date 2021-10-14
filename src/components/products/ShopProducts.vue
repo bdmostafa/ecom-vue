@@ -99,6 +99,7 @@ export default {
   methods: {
     ...mapActions("cart", ["addToCart"]),
     ...mapActions("products", ["fetchProducts"]),
+
     getCategorizedProducts() {
       this.products.forEach((p) => {
         if (
@@ -114,7 +115,7 @@ export default {
       this.categorizedProducts = Object.keys(this.categorizedProducts).map(
         (key) => this.categorizedProducts[key]
       );
-      console.log(this.categorizedProducts);
+      // console.log(this.categorizedProducts);
     },
   },
   computed: mapGetters("products", ["products"]),
@@ -123,9 +124,9 @@ export default {
     this.isLoading = true;
 
     this.fetchProducts();
-    this.getCategorizedProducts();
 
     setTimeout(() => {
+      this.getCategorizedProducts();
       this.isLoading = false;
     }, 1500);
   },

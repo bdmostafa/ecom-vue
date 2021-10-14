@@ -71,7 +71,7 @@ export default {
             
           })
           .catch((error) => {
-            errorToaster("My Order", error.response.data);
+            errorToaster(error.response.statusText, error.response.data);
           });
       },
   },

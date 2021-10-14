@@ -8,6 +8,7 @@
               <i class="fa fa-bars"></i>
               <span>All departments</span>
             </div>
+
             <ul v-if="!isLoading && categories.length > 0">
               <li v-for="category in categories" :key="category">
                 <router-link :to="`/category/${category}`">
@@ -16,6 +17,7 @@
               </li>
             </ul>
 
+            <!-- Loading Spinner -->
             <Circle8 style="width: 100%" v-if="isLoading"></Circle8>
           </div>
         </div>
@@ -56,7 +58,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "HeroCallToAction",
@@ -66,18 +68,20 @@ export default {
     };
   },
   methods: {
-    categoriesAreAvailable() {
+    ...mapActions("products", ["getCategories"]),
+    areCategoriesAvailable() {
       if (this.categories.length > 0) {
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 2000);
+        this.isLoading = false;
       }
     },
   },
   computed: mapGetters("products", ["categories"]),
   created() {
+    this.getCategories();
     this.isLoading = true;
-    this.categoriesAreAvailable();
+    setTimeout(() => {
+      this.areCategoriesAvailable();
+    }, 1500);
   },
 };
 </script>

@@ -9,16 +9,22 @@ export default {
   state() {
     return {
       isLoggedIn: false,
-      loggedInUser: {},
+      loggedInUser: JSON.parse(localStorage.getItem("userData")) || {},
       success: "",
     };
   },
   mutations: {
     LOGIN(state, payload) {
       state.isLoggedIn = true;
-      state.loggedInUser = payload;
+      // state.loggedInUser = payload;
       state.success = payload.success.message;
-      successToaster("Login Status", "You have logged in successfully.");
+
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({ token: payload.token, user: payload.user })
+      );
+
+      successToaster("Login Status", payload.success.message);
     },
     LOGOUT(state) {
       state.isLoggedIn = false;
@@ -35,6 +41,7 @@ export default {
         .post(`https://ecombs.herokuapp.com/users/login`, { ...payload })
         .then((response) => {
           const userData = response.data;
+
           commit("LOGIN", userData);
         })
         .catch((error) => {
@@ -57,6 +64,8 @@ export default {
           const userData = response.data;
           commit("LOGOUT", userData);
           successToaster("Logout Status", "You have logged out successfully.");
+
+          localStorage.removeItem("userData");
         })
         .catch((error) => {
           errorToaster("Logout Status", error.response.data);
@@ -71,7 +80,10 @@ export default {
         .then((response) => {
           const userData = response.data;
           commit("CREATE_ACCOUNT", userData);
-          successToaster("New Register", "You have been registered successfully.")
+          successToaster(
+            "New Register",
+            "You have been registered successfully."
+          );
         })
         .catch((error) => {
           errorToaster(error.response.statusText, error.response.data[0].msg);
@@ -83,6 +95,7 @@ export default {
       return state.isLoggedIn;
     },
     loggedInUser(state) {
+      console.log(state.loggedInUser)
       return state.loggedInUser;
     },
     successMessage(state) {
