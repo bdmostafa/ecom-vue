@@ -81,7 +81,7 @@
         </div>
       </div>
     </div>
-    <Circle8 style="width: 100%" v-if="isLoading"></Circle8>
+    <LoadingSpinner style="width: 100%" v-if="isLoading"></LoadingSpinner>
   </section>
 </template>
 

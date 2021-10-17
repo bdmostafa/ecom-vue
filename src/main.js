@@ -22,6 +22,6 @@ app.use(store);
 app.component("Footer", Footer);
 app.component("ProductCard", ProductCard);
 app.component("ShopProducts", ShopProducts);
-app.component("Circle8", Circle8);
+app.component("LoadingSpinner", Circle8);
 
 app.mount("#app");

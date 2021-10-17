@@ -101,10 +101,10 @@
       </div>
 
       <!-- Loading Spinner -->
-      <Circle8
+      <LoadingSpinner
         style="width: 100%; min-height: 20vh;"
         v-if="isLoading"
-      ></Circle8>
+      ></LoadingSpinner>
     </div>
   </section>
 </template>
