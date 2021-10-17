@@ -4,7 +4,7 @@
   <the-header></the-header>
 </ScrollView>
 
-  <router-view :key="this.$route.path"></router-view>
+  <router-view style="margin-top: 200px" :key="this.$route.path"></router-view>
 
   <Footer />
 </template>

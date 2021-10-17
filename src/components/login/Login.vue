@@ -142,10 +142,10 @@ export default {
 
         try {
           await this.createAccount({ ...this.user });
-          this.$router.replace('/login')
+          this.$router.replace("/login");
         } catch (err) {
           console.log(err);
-          this.$router.back()
+          this.$router.back();
         }
         this.isLoading = false;
 
@@ -160,7 +160,7 @@ export default {
 
         try {
           await this.login(loginData);
-          this.$router.back()
+          this.$router.back();
         } catch (err) {
           console.log(err);
         }
@@ -192,6 +192,7 @@ export default {
   height: 515px;
   width: 400px;
   margin-bottom: 25px;
+  margin-top: 200px;
 }
 .row h2 {
   margin: 0 auto;

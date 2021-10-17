@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "../../../api/http.js";
 
 export default {
   namespaced: true,
@@ -7,7 +8,7 @@ export default {
       products: [],
       categories: [],
       filteredProducts: null,
-      product: {}
+      product: {},
     };
   },
   mutations: {
@@ -15,24 +16,25 @@ export default {
     ALL_CATEGORIES: (state, payload) => (state.categories = payload),
     GET_FILTERED_PRODUCTS: (state, payload) =>
       (state.filteredProducts = payload),
-    FETCH_PRODUCT: (state, payload) => (state.product = payload)
+    FETCH_PRODUCT: (state, payload) => (state.product = payload),
   },
   actions: {
     async fetchProducts({ commit }) {
-      const response = await axios.get("https://ecombs.herokuapp.com/products");
+      const response = await axios.get(`${api}/products`);
 
       commit("FETCH_PRODUCTS", response.data);
       // console.log("====", response.data)
     },
     async fetchProduct({ commit, dispatch }, productId) {
-      const response = await axios.get(`https://ecombs.herokuapp.com/products/${productId}`);
+      const response = await axios.get(`${api}/products/${productId}`);
 
-      dispatch('products/getFilteredProducts', response.data.product.category, {root: true})
+      dispatch("products/getFilteredProducts", response.data.product.category, {
+        root: true,
+      });
       commit("FETCH_PRODUCT", response.data.product);
-      
     },
     async getCategories({ commit }) {
-      const response = await axios.get("https://ecombs.herokuapp.com/products");
+      const response = await axios.get(`${api}/products`);
 
       let categoriesArray = response.data.products.map(
         (product) => product.category
@@ -44,9 +46,7 @@ export default {
       commit("ALL_CATEGORIES", uniqueCategories);
     },
     async getFilteredProducts({ commit }, payload) {
-      const response = await axios.get(
-        `https://ecombs.herokuapp.com/products/category/${payload}`
-      );
+      const response = await axios.get(`${api}/products/category/${payload}`);
 
       //   let filteredProducts = response.data.products.filter(
       //     (product) => product.category === payload
@@ -68,7 +68,7 @@ export default {
       return state.filteredProducts;
     },
     product(state) {
-      return state.product
-    }
+      return state.product;
+    },
   },
 };

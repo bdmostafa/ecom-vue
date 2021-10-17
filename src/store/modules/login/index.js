@@ -1,8 +1,6 @@
 import axios from "axios";
-import {
-  successToaster,
-  errorToaster,
-} from "../../../services/Handler.js";
+import { api } from "../../../api/http.js";
+import { successToaster, errorToaster } from "../../../services/Handler.js";
 
 export default {
   namespaced: true,
@@ -36,7 +34,7 @@ export default {
   actions: {
     async login({ commit }, payload) {
       await axios
-        .post(`https://ecombs.herokuapp.com/users/login`, { ...payload })
+        .post(`${api}/users/login`, { ...payload })
         .then((response) => {
           const userData = response.data;
 
@@ -50,7 +48,7 @@ export default {
       // console.log(payload)
       await axios
         .post(
-          `https://ecombs.herokuapp.com/users/logout`,
+          `${api}/users/logout`,
           {},
           {
             headers: {
@@ -71,7 +69,7 @@ export default {
     },
     async createAccount({ commit }, payload) {
       await axios
-        .post(`https://ecombs.herokuapp.com/users/create`, {
+        .post(`${api}/users/create`, {
           ...payload,
           role: "user",
         })

@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-5">
+  <div class="container">
     <!-- When the cart is empty-->
     <div class="text-center my-5" v-if="!cartItems.length">
       <h4>Cart Is Empty</h4>

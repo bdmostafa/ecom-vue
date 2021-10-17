@@ -10,13 +10,13 @@ import "toastr/build/toastr.min.css";
 import "toastr/build/toastr.min.css";
 import { Circle8 } from "vue-loading-spinner";
 import "./assets/css/font-awesome.min.css";
-// import VueScrollFixedNavbar from "vue-scroll-fixed-navbar";
+
 
 const app = createApp(App);
-
+console.log(process.env.VUE_APP_API_ROOT)
 app.use(router);
 app.use(store);
-// app.use(VueScrollFixedNavbar);
+// app.use(dotenv).config()
 
 // Global Component
 app.component("Footer", Footer);
