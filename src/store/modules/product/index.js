@@ -12,7 +12,7 @@ export default {
     };
   },
   mutations: {
-    FETCH_PRODUCTS: (state, payload) => (state.products = payload.products),
+    FETCH_PRODUCTS: (state, payload) => (state.products = payload),
     ALL_CATEGORIES: (state, payload) => (state.categories = payload),
     GET_FILTERED_PRODUCTS: (state, payload) =>
       (state.filteredProducts = payload),
@@ -22,7 +22,13 @@ export default {
     async fetchProducts({ commit }) {
       const response = await axios.get(`${api}/products`);
 
-      commit("FETCH_PRODUCTS", response.data);
+      // Shuffle the products array
+      const shuffledProducts = getRandom(
+        response.data.products,
+        response.data.products.length
+      );
+
+      commit("FETCH_PRODUCTS", shuffledProducts);
       // console.log("====", response.data)
     },
     async fetchProduct({ commit, dispatch }, productId) {
@@ -71,4 +77,19 @@ export default {
       return state.product;
     },
   },
+};
+
+// Shuffle the products array
+const getRandom = (arr, n) => {
+  var result = new Array(n),
+    len = arr.length,
+    taken = new Array(len);
+  if (n > len)
+    throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+    var x = Math.floor(Math.random() * len);
+    result[n] = arr[x in taken ? taken[x] : x];
+    taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
 };

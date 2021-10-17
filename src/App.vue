@@ -1,22 +1,23 @@
 <template>
+  <ScrollView>
+    <the-header></the-header>
+  </ScrollView>
 
-<ScrollView>
-  <the-header></the-header>
-</ScrollView>
-
-  <router-view style="margin-top: 200px" :key="this.$route.path"></router-view>
+  <div style="margin-top: 200px">
+    <router-view :key="this.$route.path"></router-view>
+  </div>
 
   <Footer />
 </template>
 
 <script>
 import TheHeader from "./components/nav/TheHeader.vue";
-import ScrollView from "./components/nav/ScrollFixedNavbar.vue"
+import ScrollView from "./components/nav/ScrollFixedNavbar.vue";
 
 export default {
   components: {
     TheHeader,
-    ScrollView
+    ScrollView,
   },
 };
 </script>
@@ -28,5 +29,5 @@ export default {
 }
 
 /* @import '~bootstrap/dist/css/bootstrap.css' */
-@import './App.css'
+@import "./App.css";
 </style>

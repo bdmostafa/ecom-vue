@@ -11,9 +11,8 @@ import "toastr/build/toastr.min.css";
 import { Circle8 } from "vue-loading-spinner";
 import "./assets/css/font-awesome.min.css";
 
-
 const app = createApp(App);
-console.log(process.env.VUE_APP_API_ROOT)
+
 app.use(router);
 app.use(store);
 // app.use(dotenv).config()
