@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+.hero{
+  margin-top: 200px;
+}
 .hero__text h2 {
   font-size: 50px;
   color: ghostwhite;

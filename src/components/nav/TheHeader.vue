@@ -150,6 +150,9 @@ export default {
 </script>
 
 <style scoped>
+.header__logo{
+  padding: 0;
+}
 .header__top__right__auth div {
   display: flex;
   justify-content: center;

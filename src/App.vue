@@ -1,5 +1,8 @@
 <template>
+
+<ScrollView>
   <the-header></the-header>
+</ScrollView>
 
   <router-view :key="this.$route.path"></router-view>
 
@@ -8,10 +11,12 @@
 
 <script>
 import TheHeader from "./components/nav/TheHeader.vue";
+import ScrollView from "./components/nav/ScrollFixedNavbar.vue"
 
 export default {
   components: {
     TheHeader,
+    ScrollView
   },
 };
 </script>
