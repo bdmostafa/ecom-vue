@@ -180,6 +180,7 @@ export default {
   background: #7fad39;
   letter-spacing: 2px;
   width: 95%;
+  cursor: pointer;
 }
 .disabled {
   cursor: not-allowed;

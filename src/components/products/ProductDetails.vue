@@ -61,7 +61,7 @@
           <button
             :disabled="product.quantity === 0 || isAdded"
             :class="{ disabled: product.quantity === 0 || isAdded }"
-            class="btn btn-success"
+            class="btn btn__addToCart"
             @click="processToAdd(product._id)"
           >
             <span
@@ -137,8 +137,8 @@ export default {
     //   fetchProduct: ["products/fetchProduct"],
     //   addToCart: ["cart/addToCart"],
     // }),
-    ...mapActions("products", ["fetchProduct"]),
-    ...mapActions("cart", ["addToCart", "updateCart", "productIsAddedToCart"]),
+    ...mapActions("products", ["fetchProduct", "fetchProducts"]),
+    ...mapActions("cart", ["addToCart", "updateCart"]),
     productIsAddedToCart(id) {
       const productInCartIndex = this.cartItems.findIndex(
         (cart) => cart._id === id
@@ -155,14 +155,19 @@ export default {
       this.isAdded = true;
     },
     updateQty(id, isIncrease, productQty) {
-      if (isIncrease) {
-        productQty > this.$refs.qtyInput.value
-          ? this.$refs.qtyInput.value++
-          : this.$refs.qtyInput.value;
-      } else {
-        this.$refs.qtyInput.value > 1
-          ? this.$refs.qtyInput.value--
-          : this.$refs.qtyInput.value;
+      // If product is added to cart, keep going and update
+      if (this.isAdded) {
+        // If isIncrease is true, make increament
+        // Otherwise, make decreament
+        if (isIncrease) {
+          productQty > this.$refs.qtyInput.value
+            ? this.$refs.qtyInput.value++
+            : this.$refs.qtyInput.value;
+        } else {
+          this.$refs.qtyInput.value > 1
+            ? this.$refs.qtyInput.value--
+            : this.$refs.qtyInput.value;
+        }
       }
 
       this.updateCart({ id, isIncrease });
@@ -180,17 +185,18 @@ export default {
     ...mapGetters("cart", ["cartItems"]),
   },
   created() {
+    this.fetchProducts();
     this.fetchProduct(this.productId);
     this.getQtyInputValue(this.productId);
     this.productIsAddedToCart(this.productId);
   },
   // mounted() {
-    // isStock() {
-    //   if (this.product.quantity === 0) {
-    //     return true
-    //   }
-    //   return false
-    // }
+  // isStock() {
+  //   if (this.product.quantity === 0) {
+  //     return true
+  //   }
+  //   return false
+  // }
   // },
 };
 </script>
@@ -242,9 +248,18 @@ li.active {
   margin-bottom: 0;
   margin-top: 20px;
 }
-.btn-success {
+.btn__addToCart {
   width: 100%;
   border-radius: 0;
+  display: inline-block;
+  font-size: 14px;
+  padding: 10px 28px 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: #7fad39;
+  letter-spacing: 2px;
+  cursor: pointer;
 }
 .section {
   width: 100%;

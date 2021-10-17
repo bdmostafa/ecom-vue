@@ -251,6 +251,7 @@ export default {
   font-weight: 700;
   background: #7fad39;
   letter-spacing: 2px;
+      cursor: pointer;
 }
 .checkout__input {
   height: 40px;

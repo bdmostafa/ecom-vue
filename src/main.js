@@ -5,10 +5,11 @@ import Footer from "./components/shared/Footer.vue";
 import ProductCard from "./components/products/ProductCard.vue";
 import ShopProducts from "./components/products/ShopProducts.vue";
 import store from "./store/index.js";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'toastr/build/toastr.min.css'
-import 'toastr/build/toastr.min.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "toastr/build/toastr.min.css";
+import "toastr/build/toastr.min.css";
 import { Circle8 } from "vue-loading-spinner";
+import "./assets/css/font-awesome.min.css";
 
 const app = createApp(App);
 
@@ -19,6 +20,6 @@ app.use(store);
 app.component("Footer", Footer);
 app.component("ProductCard", ProductCard);
 app.component("ShopProducts", ShopProducts);
-app.component('Circle8', Circle8)
+app.component("Circle8", Circle8);
 
 app.mount("#app");

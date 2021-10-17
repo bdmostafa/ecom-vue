@@ -144,6 +144,7 @@ export default {
   computed: {
     ...mapGetters("cart", ["totalPrice", "cartItems"]),
     ...mapGetters("login", ["isAuthenticated", "loggedInUser"]),
+
   },
 };
 </script>
@@ -163,5 +164,6 @@ export default {
   font-weight: 700;
   background: #7fad39;
   letter-spacing: 2px;
+      cursor: pointer;
 }
 </style>

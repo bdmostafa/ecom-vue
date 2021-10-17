@@ -141,7 +141,7 @@ export default {
   computed: {
     ...mapGetters("order", ["myOrders"]),
     ...mapGetters("login", ["loggedInUser"]),
-    
+
     // Calculate total price of loggedInUser orders
     calculateTotal: function() {
       let total = 0;
@@ -170,5 +170,6 @@ export default {
   font-weight: 700;
   background: #7fad39;
   letter-spacing: 2px;
+  cursor: pointer;
 }
 </style>

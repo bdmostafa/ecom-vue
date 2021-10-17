@@ -179,6 +179,7 @@ form #increase {
   font-weight: 700;
   background: #7fad39;
   letter-spacing: 2px;
+  cursor: pointer;
 }
 .quantity__input {
   text-align: end;

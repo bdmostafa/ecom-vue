@@ -89,6 +89,7 @@ export default {
   props: ["category"],
   methods: {
     ...mapActions("products", ["getFilteredProducts"]),
+    ...mapActions("cart", ["addToCart"]),
   },
   computed: mapGetters("products", ["filteredProducts"]),
 
@@ -146,6 +147,7 @@ export default {
   background: #7fad39;
   letter-spacing: 2px;
   width: 95%;
+  cursor: pointer;
 }
 .disabled {
   cursor: not-allowed;

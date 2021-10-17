@@ -2,32 +2,32 @@ import {
   successToaster,
   infoToaster,
   errorToaster,
-} from "../../../components/shared/service/Hendler.js";
+  warnToaster,
+} from "../../../services/Handler.js";
 
-const saveToLocalStorage = (items) => {
+const saveToLocalStorage = (state) => {
   localStorage.setItem(
     "cart",
     JSON.stringify({
-      cartItems: items,
-      cartTotalInNumbers: this.cartTotal,
-      totalPrice: this.totalPrice,
+      cartItems: state.cartItems,
+      cartTotalInNumbers: state.cartTotalInNumbers,
+      totalPrice: state.totalPrice,
     })
   );
-}
+};
 
 export default {
   namespaced: true,
   state() {
     return {
       cartItems: [],
-      cartTotal: 0,
+      cartTotalInNumbers: 0,
       totalPrice: 0,
       productIsAdded: false,
     };
   },
   mutations: {
     ADD_TO_CART(state, payload) {
-      // console.log(payload);
       const productData = payload;
       const productInCartIndex = state.cartItems.findIndex(
         (item) => item._id === productData._id
@@ -35,11 +35,17 @@ export default {
 
       if (productInCartIndex >= 0) {
         // When a product is in cart already, return here
-        infoToaster("Add To Cart", "This product has already been added.");
+        infoToaster("Add To Cart", `This product ${productData.title} has already been added.`);
         return;
       }
       // When a product is in cart newly
       else {
+        // If product has no stock, return from here
+        if (productData.quantity < 1) {
+          warnToaster("No Stock", `Oops! ${productData.title} has no stock`);
+          return;
+        }
+
         const newItem = {
           _id: productData._id,
           image: productData.image,
@@ -50,16 +56,16 @@ export default {
         };
         state.cartItems.push(newItem);
 
-        saveToLocalStorage(newItem);
-
         successToaster(
           "Add To Cart",
           `${productData.title} has been added successfully`
         );
       }
 
-      state.cartTotal++;
+      state.cartTotalInNumbers++;
       state.totalPrice += productData.price;
+
+      saveToLocalStorage(state);
     },
     UPDATE_CART(state, payload) {
       const product = payload.selectedProduct;
@@ -79,14 +85,7 @@ export default {
               (state.totalPrice += product.price))
             : product.quantity;
 
-            localStorage.setItem(
-              "cart",
-              JSON.stringify({
-                cartItems: this.cartItems,
-                cartTotalInNumbers: this.cartTotal,
-                totalPrice: this.totalPrice,
-              })
-            );
+          saveToLocalStorage(state);
         } else {
           // Decrease by one upto one in cart
           state.cartItems[productInCartIndex].qtyOrdered > 1
@@ -95,14 +94,7 @@ export default {
             : 1;
         }
         // console.log(state.cartItems);
-        localStorage.setItem(
-          "cart",
-          JSON.stringify({
-            cartItems: this.cartItems,
-            cartTotalInNumbers: this.cartTotal,
-            totalPrice: this.totalPrice,
-          })
-        );
+        saveToLocalStorage(state);
       } else {
         errorToaster("Update Cart", "You must add to cart first");
       }
@@ -118,8 +110,10 @@ export default {
 
         state.cartItems.splice(productInCartIndex, 1);
 
-        state.cartTotal--;
+        state.cartTotalInNumbers--;
         state.totalPrice -= productData.price * productData.qtyOrdered;
+
+        saveToLocalStorage(state);
 
         successToaster(
           "Remove From Cart",
@@ -180,7 +174,7 @@ export default {
       return state.cartItems;
     },
     cartQty(state) {
-      return state.cartTotal;
+      return state.cartTotalInNumbers;
     },
     totalPrice(state) {
       return state.totalPrice;

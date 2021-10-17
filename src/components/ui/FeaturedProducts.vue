@@ -26,8 +26,7 @@
 
       <div
         v-if="
-          !isLoading &&
-            (products.length > 0 || filteredProducts.length > 0)
+          !isLoading && (products.length > 0 || filteredProducts.length > 0)
         "
         class="row featured__filter"
       >
@@ -102,7 +101,10 @@
       </div>
 
       <!-- Loading Spinner -->
-      <Circle8 style="width: 100%; min-height: 20vh;" v-if="isLoading"></Circle8>
+      <Circle8
+        style="width: 100%; min-height: 20vh;"
+        v-if="isLoading"
+      ></Circle8>
     </div>
   </section>
 </template>
@@ -137,8 +139,7 @@ export default {
 
       setTimeout(() => {
         this.isLoading = false;
-      }, 1000)
-      
+      }, 1000);
     },
     areProductsAvailable() {
       if (this.products.length > 0) {
@@ -154,7 +155,7 @@ export default {
     this.getCategories();
     setTimeout(() => {
       this.areProductsAvailable();
-    }, 1500)
+    }, 1500);
   },
 };
 </script>
@@ -200,7 +201,7 @@ export default {
   color: green;
 }
 .section-title {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 .btn__addToCart {
   display: inline-block;
@@ -212,6 +213,7 @@ export default {
   background: #7fad39;
   letter-spacing: 2px;
   width: 95%;
+  cursor: pointer;
 }
 .disabled {
   cursor: not-allowed;

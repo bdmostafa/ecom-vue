@@ -2,7 +2,7 @@ import axios from "axios";
 import {
     successToaster,
     errorToaster,
-  } from "../../../components/shared/service/Hendler.js";
+  } from "../../../services/Handler.js";
 
 export default {
   namespaced: true,

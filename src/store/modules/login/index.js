@@ -2,7 +2,7 @@ import axios from "axios";
 import {
   successToaster,
   errorToaster,
-} from "../../../components/shared/service/Hendler.js";
+} from "../../../services/Handler.js";
 
 export default {
   namespaced: true,
@@ -10,13 +10,11 @@ export default {
     return {
       isLoggedIn: false,
       loggedInUser: JSON.parse(localStorage.getItem("userData")) || {},
-      success: "",
     };
   },
   mutations: {
     LOGIN(state, payload) {
       state.isLoggedIn = true;
-      // state.loggedInUser = payload;
       state.success = payload.success.message;
 
       localStorage.setItem(
@@ -95,11 +93,7 @@ export default {
       return state.isLoggedIn;
     },
     loggedInUser(state) {
-      console.log(state.loggedInUser)
       return state.loggedInUser;
-    },
-    successMessage(state) {
-      return state.success;
     },
   },
 };
